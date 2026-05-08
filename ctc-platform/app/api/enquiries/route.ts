@@ -1,36 +1,24 @@
 // app/api/enquiries/route.ts
-// POST /api/enquiries — saves an enquiry and sends email notifications
-
 import { NextRequest, NextResponse } from 'next/server'
-import { getSupabaseAdmin } from '@/lib/supabase'
-import { sendEnquiryNotificationToAdmin, sendEnquiryConfirmationToSubmitter } from '@/lib/email'
-import type { Enquiry } from '@/types'
 
-// Simple rate limiting store (in-memory; resets on server restart)
-// For production, replace with a Redis-based solution
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
-  const windowMs = 60 * 60 * 1000 // 1 hour
+  const windowMs = 60 * 60 * 1000
   const limit = 5
-
   const record = rateLimitMap.get(ip)
-
   if (!record || now > record.resetAt) {
     rateLimitMap.set(ip, { count: 1, resetAt: now + windowMs })
     return false
   }
-
   if (record.count >= limit) return true
-
   record.count++
   return false
 }
 
 export async function POST(request: NextRequest) {
   try {
-    // ── Rate limit check ──
     const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
     if (isRateLimited(ip)) {
       return NextResponse.json(
@@ -39,7 +27,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // ── Parse and validate body ──
     const body = await request.json()
     const { name, email, subject, message, relatedProductId } = body
 
@@ -57,18 +44,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // ── Save to database ──
+    // Dynamic imports keep these off the module-load critical path
+    const { getSupabaseAdmin } = await import('@/lib/supabase')
+    const { sendEnquiryNotificationToAdmin, sendEnquiryConfirmationToSubmitter } = await import('@/lib/email')
+
     const supabaseAdmin = getSupabaseAdmin()
 
     const { data, error } = await supabaseAdmin
       .from('enquiries')
       .insert({
-        name:                name.trim(),
-        email:               email.trim().toLowerCase(),
-        subject:             subject?.trim() || null,
-        message:             message.trim(),
-        related_product_id:  relatedProductId || null,
-        status:              'new',
+        name:               name.trim(),
+        email:              email.trim().toLowerCase(),
+        subject:            subject?.trim() || null,
+        message:            message.trim(),
+        related_product_id: relatedProductId || null,
+        status:             'new',
       })
       .select()
       .single()
@@ -81,19 +71,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // ── Map to TypeScript type ──
-    const enquiry: Enquiry = {
+    const enquiry = {
       id:               data.id,
       name:             data.name,
       email:            data.email,
       subject:          data.subject ?? undefined,
       message:          data.message,
       relatedProductId: data.related_product_id ?? undefined,
-      status:           data.status,
+      status:           data.status as 'new' | 'read' | 'responded',
       createdAt:        data.created_at,
     }
 
-    // ── Send emails (non-blocking — don't fail the response if email fails) ──
+    // Non-blocking — don't fail the response if email fails
     await Promise.allSettled([
       sendEnquiryNotificationToAdmin(enquiry),
       sendEnquiryConfirmationToSubmitter(enquiry),

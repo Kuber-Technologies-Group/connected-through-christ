@@ -1,24 +1,33 @@
 // lib/email.ts
-// Email sending helpers via Resend
 // SERVER-SIDE ONLY — only call from /app/api/* routes
 
-import { Resend } from 'resend'
 import type { Enquiry } from '@/types'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const ADMIN_EMAIL = process.env.CTC_ADMIN_EMAIL!
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://connectedthroughchrist.com'
-const FROM_EMAIL = 'noreply@connectedthroughchrist.com' // Update after domain verification in Resend
+const FROM_EMAIL = 'noreply@connectedthroughchrist.com'
 
-// ─── Notify admin of new enquiry ─────────────────────────────────────────────
+// Resend client is created lazily inside each function — not at module load time.
+// This prevents build failures when RESEND_API_KEY is not set during `next build`.
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) throw new Error('Missing RESEND_API_KEY environment variable.')
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { Resend } = require('resend')
+  return new Resend(apiKey)
+}
+
 export async function sendEnquiryNotificationToAdmin(enquiry: Enquiry): Promise<void> {
+  const resend = getResend()
+  const adminEmail = process.env.CTC_ADMIN_EMAIL
+  if (!adminEmail) throw new Error('Missing CTC_ADMIN_EMAIL environment variable.')
+
   const subject = enquiry.subject
     ? `New Enquiry: ${enquiry.subject}`
     : `New Enquiry from ${enquiry.name}`
 
   await resend.emails.send({
     from: FROM_EMAIL,
-    to: ADMIN_EMAIL,
+    to: adminEmail,
     subject,
     html: `
       <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; color: #2C2C2C;">
@@ -55,7 +64,7 @@ export async function sendEnquiryNotificationToAdmin(enquiry: Enquiry): Promise<
         </div>
         <div style="padding: 16px 32px; background: #E5E1D8; text-align: center;">
           <p style="margin: 0; font-family: sans-serif; font-size: 12px; color: #6B7280;">
-            Submitted via ${SITE_URL} · ${new Date(enquiry.createdAt).toLocaleString('en-ZA')}
+            Submitted via ${SITE_URL} &middot; ${new Date(enquiry.createdAt).toLocaleString('en-ZA')}
           </p>
         </div>
       </div>
@@ -63,8 +72,9 @@ export async function sendEnquiryNotificationToAdmin(enquiry: Enquiry): Promise<
   })
 }
 
-// ─── Send confirmation to the person who submitted ───────────────────────────
 export async function sendEnquiryConfirmationToSubmitter(enquiry: Enquiry): Promise<void> {
+  const resend = getResend()
+
   await resend.emails.send({
     from: FROM_EMAIL,
     to: enquiry.email,
@@ -84,21 +94,21 @@ export async function sendEnquiryConfirmationToSubmitter(enquiry: Enquiry): Prom
             Thank you, ${enquiry.name}.
           </h2>
           <p style="font-family: sans-serif; font-size: 15px; line-height: 1.7; color: #2C2C2C; margin: 0 0 16px;">
-            We've received your message and will be in touch with you soon.
+            We have received your message and will be in touch with you soon.
           </p>
           <blockquote style="border-left: 3px solid #4A90C4; margin: 24px 0; padding: 12px 20px; font-style: italic; font-size: 17px; color: #1B2F5E; line-height: 1.6;">
-            "For where two or three gather in my name, there am I with them."
+            &ldquo;For where two or three gather in my name, there am I with them.&rdquo;
             <footer style="margin-top: 8px; font-size: 13px; color: #4A90C4; font-style: normal; font-family: sans-serif;">
-              — Matthew 18:20, NIV
+              &mdash; Matthew 18:20, NIV
             </footer>
           </blockquote>
           <p style="font-family: sans-serif; font-size: 14px; color: #6B7280; line-height: 1.7; margin: 24px 0 0;">
-            In the meantime, visit our shop or read today's daily verse on our website.
+            In the meantime, visit our shop or read today&rsquo;s daily verse on our website.
           </p>
         </div>
         <div style="padding: 16px 32px; background: #E5E1D8; text-align: center;">
           <p style="margin: 0; font-family: sans-serif; font-size: 12px; color: #6B7280;">
-            Connected Through Christ · The Christ Centre Movement
+            Connected Through Christ &middot; The Christ Centre Movement
           </p>
           <p style="margin: 4px 0 0; font-family: sans-serif; font-size: 12px; color: #6B7280;">
             <a href="${SITE_URL}" style="color: #4A90C4;">${SITE_URL}</a>
