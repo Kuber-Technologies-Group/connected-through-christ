@@ -2,55 +2,43 @@
 import { supabase } from './supabase'
 import type { DailyVerse } from '@/types'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapVerse(row: any): DailyVerse {
+type DbRow = { [key: string]: string | number | boolean | null | undefined }
+
+function mapVerse(row: DbRow): DailyVerse {
   return {
-    id:             row.id,
-    verseText:      row.verse_text,
-    reference:      row.reference,
-    translation:    row.translation ?? 'NIV',
-    scheduledDate:  row.scheduled_date,
-    reflectionNote: row.reflection_note ?? undefined,
-    createdAt:      row.created_at,
+    id:             String(row.id ?? ''),
+    verseText:      String(row.verse_text ?? ''),
+    reference:      String(row.reference ?? ''),
+    translation:    row.translation ? String(row.translation) : 'NIV',
+    scheduledDate:  String(row.scheduled_date ?? ''),
+    reflectionNote: row.reflection_note ? String(row.reflection_note) : undefined,
+    createdAt:      String(row.created_at ?? ''),
   }
 }
 
-async function withTimeout<T>(promise: Promise<T>, ms = 5000): Promise<T> {
-  const timeout = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('Supabase timeout')), ms)
+function deadline(ms: number): Promise<never> {
+  return new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('timeout')), ms)
   )
-  return Promise.race([promise, timeout])
 }
 
 export async function getTodaysVerse(): Promise<DailyVerse | null> {
   try {
     const today = new Date().toISOString().split('T')[0]
 
-    const { data: todayData, error: todayError } = await withTimeout(
-      supabase
-        .from('daily_verses')
-        .select('*')
-        .eq('scheduled_date', today)
-        .single()
-    )
+    const { data: todayData, error: todayError } = await Promise.race([
+      supabase.from('daily_verses').select('*').eq('scheduled_date', today).single(),
+      deadline(5000),
+    ])
+    if (!todayError && todayData) return mapVerse(todayData as DbRow)
 
-    if (!todayError && todayData) return mapVerse(todayData)
-
-    const { data: fallbackData, error: fallbackError } = await withTimeout(
-      supabase
-        .from('daily_verses')
-        .select('*')
-        .lte('scheduled_date', today)
-        .order('scheduled_date', { ascending: false })
-        .limit(1)
-        .single()
-    )
-
-    if (fallbackError || !fallbackData) return null
-    return mapVerse(fallbackData)
-  } catch {
-    return null
-  }
+    const { data: fallback, error: fallbackError } = await Promise.race([
+      supabase.from('daily_verses').select('*').lte('scheduled_date', today).order('scheduled_date', { ascending: false }).limit(1).single(),
+      deadline(5000),
+    ])
+    if (fallbackError || !fallback) return null
+    return mapVerse(fallback as DbRow)
+  } catch { return null }
 }
 
 export async function getVerseArchive(): Promise<DailyVerse[]> {
@@ -60,18 +48,11 @@ export async function getVerseArchive(): Promise<DailyVerse[]> {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
     const fromDate = thirtyDaysAgo.toISOString().split('T')[0]
 
-    const { data, error } = await withTimeout(
-      supabase
-        .from('daily_verses')
-        .select('*')
-        .lte('scheduled_date', today)
-        .gte('scheduled_date', fromDate)
-        .order('scheduled_date', { ascending: false })
-    )
-
+    const { data, error } = await Promise.race([
+      supabase.from('daily_verses').select('*').lte('scheduled_date', today).gte('scheduled_date', fromDate).order('scheduled_date', { ascending: false }),
+      deadline(5000),
+    ])
     if (error) return []
-    return (data ?? []).map(mapVerse)
-  } catch {
-    return []
-  }
+    return (data ?? []).map((row) => mapVerse(row as DbRow))
+  } catch { return [] }
 }

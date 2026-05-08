@@ -47,7 +47,7 @@ export function Footer() {
             </p>
             {/* Scripture accent */}
             <p className="font-scripture italic text-white/50 text-sm mt-5 leading-relaxed max-w-xs">
-              "For where two or three gather in my name, there am I with them." — Matt 18:20
+              &ldquo;For where two or three gather in my name, there am I with them.&rdquo; &mdash; Matt 18:20
             </p>
           </div>
 
