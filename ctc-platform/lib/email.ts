@@ -11,8 +11,7 @@ const FROM_EMAIL = 'noreply@connectedthroughchrist.com'
 function getResend() {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('Missing RESEND_API_KEY environment variable.')
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { Resend } = require('resend')
+  const { Resend } = require('resend') // eslint-disable-line
   return new Resend(apiKey)
 }
 
