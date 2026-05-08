@@ -1,0 +1,174 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ───────────────────────────────────────────────── */
+:root {
+  --color-navy:        #1B2F5E;
+  --color-navy-dark:   #111E3E;
+  --color-navy-light:  #2A4580;
+  --color-blue:        #4A90C4;
+  --color-blue-light:  #7AB3D8;
+  --color-cream:       #F7F4EF;
+  --color-gold:        #C8A84B;
+  --color-gold-light:  #E0C97A;
+  --color-charcoal:    #2C2C2C;
+  --color-muted:       #6B7280;
+  --color-border:      #E5E1D8;
+  --color-white:       #FFFFFF;
+
+  --font-display:    'Cormorant Garamond', Georgia, serif;
+  --font-sans:       'Lato', 'Helvetica Neue', sans-serif;
+  --font-scripture:  'EB Garamond', Georgia, serif;
+
+  --section-padding: 5rem;
+  --container-max:   1200px;
+  --container-pad:   1.5rem;
+}
+
+/* ─── Base Styles ─────────────────────────────────────────────────── */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-brand-cream text-brand-charcoal;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply text-brand-navy font-medium;
+  }
+
+  h1 { @apply text-display-xl; }
+  h2 { @apply text-display-lg; }
+  h3 { @apply text-display-md; }
+  h4 { @apply text-display-sm; }
+
+  p { @apply leading-relaxed; }
+  a { @apply transition-colors duration-200; }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-blue;
+  }
+}
+
+/* ─── Component Classes ───────────────────────────────────────────── */
+@layer components {
+
+  .container-brand {
+    @apply max-w-[1200px] mx-auto px-6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           px-6 py-3 rounded-brand
+           bg-brand-navy text-white
+           font-sans font-semibold text-sm tracking-wide
+           hover:bg-brand-navy-dark
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           shadow-brand-sm hover:shadow-brand;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center
+           px-6 py-3 rounded-brand
+           border-2 border-brand-navy text-brand-navy
+           font-sans font-semibold text-sm tracking-wide
+           hover:bg-brand-navy hover:text-white
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center
+           px-6 py-3 rounded-brand
+           text-brand-navy font-sans font-semibold text-sm
+           transition-all duration-200;
+  }
+  .btn-ghost:hover {
+    background-color: rgba(27, 47, 94, 0.08);
+  }
+
+  .section-heading {
+    @apply font-display text-brand-navy font-medium;
+  }
+
+  .section-label {
+    @apply text-brand-blue font-sans text-xs font-bold tracking-[0.2em] uppercase mb-2;
+  }
+
+  .card {
+    @apply bg-white rounded-brand-lg shadow-brand-sm
+           border border-brand-border
+           transition-shadow duration-300
+           hover:shadow-brand;
+  }
+
+  .input-brand {
+    @apply w-full px-4 py-3 rounded-brand
+           border border-brand-border bg-white
+           text-brand-charcoal placeholder:text-brand-muted
+           font-sans text-sm
+           focus:outline-none focus:border-brand-blue
+           transition-all duration-200;
+  }
+  .input-brand:focus {
+    box-shadow: 0 0 0 2px rgba(74, 144, 196, 0.4);
+  }
+
+  .label-brand {
+    @apply block text-brand-charcoal font-sans font-semibold text-sm mb-1.5;
+  }
+
+  .verse-text {
+    font-family: var(--font-scripture);
+    @apply text-xl leading-relaxed italic text-brand-navy;
+  }
+
+  .verse-reference {
+    font-family: var(--font-display);
+    @apply text-brand-blue font-medium tracking-wide not-italic;
+  }
+
+  .divider-brand {
+    @apply border-t border-brand-border;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1
+           rounded-full text-xs font-sans font-bold
+           tracking-wide uppercase;
+  }
+
+  .badge-navy {
+    @apply text-brand-navy;
+    background-color: rgba(27, 47, 94, 0.1);
+  }
+
+  .badge-blue {
+    @apply text-brand-blue;
+    background-color: rgba(74, 144, 196, 0.1);
+  }
+
+  .badge-gold {
+    @apply text-brand-gold;
+    background-color: rgba(200, 168, 75, 0.15);
+  }
+}
+
+/* ─── Utilities ───────────────────────────────────────────────────── */
+@layer utilities {
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .opacity-0-init { opacity: 0; }
+}

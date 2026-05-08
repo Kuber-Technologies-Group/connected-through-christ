@@ -217,7 +217,7 @@ NEXT_PUBLIC_SITE_URL=
 
 | Item | Status |
 |---|---|
-| Project setup (Next.js + Supabase) | ⬜ Not started |
+| Project setup (Next.js + Supabase) | 🔄 In progress |
 | Tailwind + brand colours configured | ⬜ Not started |
 | Database tables created | ⬜ Not started |
 | Navbar + Footer components | ⬜ Not started |
