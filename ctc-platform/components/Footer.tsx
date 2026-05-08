@@ -2,17 +2,17 @@
 import Link from 'next/link'
 
 const SHOP_LINKS = [
-  { href: '/shop',                    label: 'All Products' },
-  { href: '/shop?category=bible',     label: 'Bibles' },
-  { href: '/shop?category=book',      label: 'Books' },
-  { href: '/shop?category=clothing',  label: 'Clothing' },
+  { href: '/shop', label: 'All Products' },
+  { href: '/shop?category=bible', label: 'Bibles' },
+  { href: '/shop?category=book', label: 'Books' },
+  { href: '/shop?category=clothing', label: 'Clothing' },
   { href: '/shop?category=accessory', label: 'Accessories' },
 ]
 
 const COMMUNITY_LINKS = [
   { href: '/daily-verse', label: 'Daily Verse' },
-  { href: '/about',       label: 'About CTC' },
-  { href: '/contact',     label: 'Contact Us' },
+  { href: '/about', label: 'About CTC' },
+  { href: '/contact', label: 'Contact Us' },
 ]
 
 export function Footer() {
@@ -100,7 +100,13 @@ export function Footer() {
           </p>
           <p className="font-sans text-white/40 text-xs">
             Built with faith by{' '}
-            <span className="text-white/60">Kuber Technologies</span>
+            <a
+              href="https://kuber.co.zw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors duration-200">
+              <span className="text-white/60">Kuber Technologies (Pvt) Ltd</span>
+            </a>
           </p>
         </div>
       </div>
