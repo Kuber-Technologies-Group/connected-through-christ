@@ -121,7 +121,7 @@ export function ContactForm({ prefillProductName }: ContactFormProps) {
           autoComplete="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="e.g. Grace Moyo"
+          placeholder="e.g. Tawanda Moyo"
           className={`input-brand ${errors.name ? 'border-red-400 focus:ring-red-300/40 focus:border-red-400' : ''}`}
         />
         {errors.name && (

@@ -59,7 +59,7 @@ export default function ContactPage({ searchParams }: PageProps) {
                 </div>
                 <div>
                   <p className="font-sans text-brand-charcoal text-sm font-semibold">Email</p>
-                  <p className="font-sans text-brand-muted text-sm">info@connectedthroughchrist.com</p>
+                  <p className="font-sans text-brand-muted text-sm">info@connectedthroughchrist.co.zw</p>
                 </div>
               </div>
 

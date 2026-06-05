@@ -49,7 +49,10 @@ export default function AboutPage() {
             Who We Are
           </h1>
           <p className="font-sans text-white/70 text-lg leading-relaxed">
-            Connected Through Christ is the digital home of the Christ Centre Movement — a ministry dedicated to equipping believers and drawing people closer to Christ through community, Scripture, and practical resources.
+            Connected Through Christ is a registered Christian initiative born out of a genuine passion for people and their relationship with God. Founded by Keane T Moyo in association with Praise Moila, the initiative seeks to unite believers from different church denominations, cultures, and backgrounds under one common purpose advancing the Kingdom of God and raising a Christ-like generation.
+          </p>
+          <p className="font-sans mt-4 text-white/70 text-lg leading-relaxed">
+            We believe that Christianity is not limited to the church building alone, but can be expressed through creativity, innovation, and everyday life. Connected Through Christ creates a space where believers can freely use their God-given gifts and talents to spread the Gospel in ways that connect with today’s generation.
           </p>
         </div>
       </div>
@@ -64,7 +67,7 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="font-sans text-brand-charcoal leading-relaxed mb-4">
-                The CTC platform was built to give the Connected Through Christ ministry a permanent, professional digital home — where the community can grow spiritually, purchase faith-based products, ask questions rooted in Scripture, and connect with one another.
+                Our mission is to inspire and equip people around the world to evangelize through their creativity and skills. Whether through fashion, music, art, design, public speaking, media, or innovation, we believe every talent can be used to glorify God and impact lives.
               </p>
               <p className="font-sans text-brand-muted text-sm leading-relaxed">
                 We believe the church doesn&rsquo;t end at the door of a building. It continues in homes, on phones, and in everyday conversations. This platform is our expression of that belief.
@@ -125,7 +128,7 @@ export default function AboutPage() {
             Browse our shop, read today&rsquo;s verse, or send us a message. We&rsquo;d love to hear from you.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/shop"    className="btn-primary">Browse the Shop</Link>
+            <Link href="/shop" className="btn-primary">Browse the Shop</Link>
             <Link href="/contact" className="btn-secondary">Get in Touch</Link>
           </div>
         </div>
