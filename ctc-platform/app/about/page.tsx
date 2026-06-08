@@ -70,7 +70,14 @@ export default function AboutPage() {
                 Our mission is to inspire and equip people around the world to evangelize through their creativity and skills. Whether through fashion, music, art, design, public speaking, media, or innovation, we believe every talent can be used to glorify God and impact lives.
               </p>
               <p className="font-sans text-brand-muted text-sm leading-relaxed">
-                We believe the church doesn&rsquo;t end at the door of a building. It continues in homes, on phones, and in everyday conversations. This platform is our expression of that belief.
+                We aim to:
+                <ul className="list-disc list-inside mt-2 mb-4 text-brand-muted">
+                  <li>Bring believers together beyond denominational boundaries</li>
+                  <li>Make evangelism creative, relatable, and impactful</li>
+                  <li>Build a generation that reflects the character and love of Christ</li>
+                  <li>Create a welcoming community where faith and creativity work together to change lives</li>
+                </ul>
+                Connected Through Christ is more than an initiative — it is a movement calling people to use what God has placed in their hands to transform the world
               </p>
             </div>
 
@@ -78,10 +85,10 @@ export default function AboutPage() {
             <div className="bg-brand-cream rounded-brand-lg p-8 border border-brand-border">
               <p className="font-display text-brand-navy/20 text-7xl leading-none mb-2 select-none">&ldquo;</p>
               <blockquote className="font-scripture italic text-brand-navy text-xl leading-relaxed -mt-4">
-                For where two or three gather in my name, there am I with them.
+                “For just as each of us has one body with many members, and these members do not all have the same function, so in Christ we, though many, form one body, and each member belongs to all the others.”
               </blockquote>
               <p className="font-sans text-brand-blue text-sm font-semibold mt-4">
-                — Matthew 18:20, NIV
+                — Romans 12:4-5 NIV
               </p>
             </div>
           </div>
@@ -89,7 +96,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── Values ── */}
-      <section className="py-16 md:py-20 bg-white">
+      {/* <section className="py-16 md:py-20 bg-white">
         <div className="container-brand">
           <div className="text-center mb-12">
             <p className="section-label mb-2">What guides us</p>
@@ -116,7 +123,52 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* What We Offer */}
+      <div className="container-brand">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+
+
+          {/* Pull quote */}
+          <div className="bg-brand-cream rounded-brand-lg p-8 border border-brand-border">
+            <p className="font-display text-brand-navy/20 text-7xl leading-none mb-2 select-none">&ldquo;</p>
+            <blockquote className="font-scripture italic text-brand-navy text-xl leading-relaxed -mt-4">
+              For where two or three gather in my name, there am I with them.
+            </blockquote>
+            <p className="font-sans text-brand-blue text-sm font-semibold mt-4">
+              — Matthew 18:20, NIV
+            </p>
+          </div>
+
+          <div>
+            <p className="section-label mb-3">What We Offer</p>
+            <h2 className="font-display text-brand-navy text-display-sm font-medium mb-5">
+              Our Products
+            </h2>
+            <p className="font-sans text-brand-charcoal leading-relaxed mb-4">
+              We create Christ-centered content, products, and experiences designed to connect with modern generations while remaining rooted in biblical values. These include:            </p>
+            <p className="font-sans text-brand-muted text-sm leading-relaxed">
+              These Include:
+              <ul className="list-disc list-inside mt-2 mb-4 text-brand-muted">
+                <li>Christian clothing and fashion</li>
+                <li>Interactive Bible-based games</li>
+                <li>Inspirational books and devotionals</li>
+                <li>Youth talks and discussions</li>
+                <li>Creative evangelism projects</li>
+                <li>Art, music, and media initiatives</li>
+                <li>Community-building events and activities</li>
+              </ul>
+              <p >
+                Our goal is to make faith engaging, meaningful, and accessible to everyone.
+              </p>
+              <p>
+                At Connected Through Christ, we want every believer to feel at home — a place where creativity meets evangelism, purpose meets passion, and lives are transformed through Jesus Christ.
+              </p>
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* ── CTA ── */}
       <section className="py-16 md:py-20">
