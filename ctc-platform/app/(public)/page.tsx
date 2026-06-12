@@ -145,10 +145,14 @@ export default async function HomePage() {
                 Connected Through Christ
               </h2>
               <p className="font-sans text-brand-charcoal leading-relaxed mb-4">
-                We are the Christ Centre Movement — a faith community built on the belief that every believer deserves a place to grow, ask questions, and be equipped for everyday life in Christ.
+                Connected Through Christ is a Christ-centred initiative led by Keane T Moyo and Praise Moila,
+                born out of a shared passion to support and strengthen the daily walk of believers. We are
+                members of the Exalted House of The Kingdom of God Church, under the leadership of Pastor Max Moila.
               </p>
               <p className="font-sans text-brand-muted text-sm leading-relaxed mb-8">
-                Through our shop, our daily verses, and our Bible Q&A, we bring Scripture into the everyday — so that faith is not just Sunday, but every day.
+                Our vision is to help people worship well &mdash; by providing tools that encourage Bible study,
+                consistent devotion, spiritual growth, and faithful stewardship. Everything we do is crafted
+                with the purpose of drawing believers deeper into their relationship with God.
               </p>
               <Link href="/about" className="btn-primary">
                 Our Story
@@ -158,15 +162,17 @@ export default async function HomePage() {
             {/* Decorative quote panel */}
             <div className="relative">
               <div className="bg-brand-gradient rounded-brand-lg p-8 md:p-10">
-                {/* Large decorative quote mark */}
                 <div className="font-display text-white/10 text-[8rem] leading-none absolute -top-4 left-6 select-none pointer-events-none">
                   &ldquo;
                 </div>
                 <blockquote className="verse-text text-white text-xl leading-relaxed relative">
-                  And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together&hellip;
+                  Let the word of Christ dwell in you richly&hellip;
                 </blockquote>
                 <p className="verse-reference text-brand-blue-light mt-5">
-                  — Hebrews 10:24–25, NIV
+                  &mdash; Colossians 3:16, NIV
+                </p>
+                <p className="font-sans text-white/50 text-xs mt-6 leading-relaxed">
+                  Keep growing, keep serving, keep seeking God with all your might.
                 </p>
               </div>
             </div>
