@@ -1,31 +1,21 @@
 // app/layout.tsx
+// Root layout — shared across all routes (public + admin)
+// Does NOT include Navbar or Footer — those are in (public)/layout.tsx
 import type { Metadata } from 'next'
 import './globals.css'
-import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: {
     default: 'Connected Through Christ',
     template: '%s | Connected Through Christ',
   },
-  description: 'Faith, community, and commerce — all in one place. Browse our shop, read today\'s verse, and connect with the Christ Centre Movement.',
-  keywords: ['Christian', 'faith', 'Bible', 'CTC', 'Connected Through Christ', 'Christ Centre Movement'],
-  openGraph: {
-    siteName: 'Connected Through Christ',
-    type: 'website',
-  },
+  description: 'Faith, community, and commerce — all in one place.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {/* Google Fonts — loaded via link tag for best performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -33,12 +23,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-brand-cream antialiased">
-        <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
+      <body className="min-h-screen bg-brand-cream antialiased">
+        {children}
       </body>
     </html>
   )

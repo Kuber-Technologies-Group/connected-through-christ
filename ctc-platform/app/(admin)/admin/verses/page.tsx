@@ -39,7 +39,7 @@ export default async function AdminVersesPage() {
                 const isToday = v.scheduled_date === today
                 const isPast  = v.scheduled_date < today
                 const isScheduled = v.scheduled_date >= today
-                
+
                 return (
                   <tr key={v.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-4">
@@ -47,7 +47,7 @@ export default async function AdminVersesPage() {
                         <span className="font-sans text-sm font-medium text-brand-charcoal">{v.scheduled_date}</span>
                         {isToday && <span className="badge bg-brand-blue/10 text-brand-blue">Today</span>}
                         {isPast && !isToday && <span className="badge bg-gray-100 text-gray-500">Past</span>}
-                        {isScheduled && !isToday && !isPast && <span className="badge bg-green-100 text-green-500">Scheduled</span>}
+                        {isScheduled && !isToday && <span className="badge bg-green-100 text-green-600">Scheduled</span>}
                       </div>
                     </td>
                     <td className="px-5 py-4 font-sans text-sm text-brand-charcoal font-medium">{v.reference}</td>

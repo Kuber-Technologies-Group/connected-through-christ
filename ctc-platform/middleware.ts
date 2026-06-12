@@ -1,5 +1,5 @@
 // middleware.ts
-// Protects all /admin/* routes — redirects to /admin/login if no session
+// Protects all /admin/* routes — redirects to /ctc-auth/login if no session
 
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
@@ -12,11 +12,11 @@ export async function middleware(request: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession()
 
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
-  const isLoginPage  = request.nextUrl.pathname === '/admin/login'
+  const isLoginPage  = request.nextUrl.pathname === '/ctc-auth/login'
 
   // Not logged in and trying to access admin → redirect to login
   if (isAdminRoute && !isLoginPage && !session) {
-    const loginUrl = new URL('/admin/login', request.url)
+    const loginUrl = new URL('/ctc-auth/login', request.url)
     loginUrl.searchParams.set('redirectTo', request.nextUrl.pathname)
     return NextResponse.redirect(loginUrl)
   }

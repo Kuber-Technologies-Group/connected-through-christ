@@ -1,4 +1,4 @@
-// app/admin/login/page.tsx
+// app/ctc-auth/login/page.tsx
 'use client'
 
 import { useState } from 'react'
