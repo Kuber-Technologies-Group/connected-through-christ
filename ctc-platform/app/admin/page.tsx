@@ -1,0 +1,5 @@
+// app/admin/page.tsx — redirect /admin → /admin/dashboard
+import { redirect } from 'next/navigation'
+export default function AdminIndexPage() {
+  redirect('/admin/dashboard')
+}
